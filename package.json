@@ -18,7 +18,8 @@
     "@mui/material": "^5.8.5",
     "next": "12.1.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-final-form": "^6.5.9"
   },
   "devDependencies": {
     "eslint": "8.18.0",
