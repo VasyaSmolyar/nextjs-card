@@ -1,20 +1,24 @@
-import { Card, CardContent, Stack, Typography, Input } from '@mui/material';
-import { required } from 'validators';
+import { Card, CardContent, Stack, Input } from '@mui/material';
+import { formatCreditCardNumber, formatCVC, formatExpirationDate } from 'formatters';
 import { Field } from 'react-final-form';
 import styles from './BankCard.module.css'
 
-export default function BankCardView() {
+export default function BankCardView({ cardValidator, monthValidator, cvcValidator }) {
   return (
-    <Card sx={{ maxWidth: 475 }}>
+    <Card sx={{ maxWidth: 375 }}>
       <CardContent>
         <Stack spacing={2}>
-          <Field name="Card Number" validate={required}>
+          <Field 
+            name="Card Number" 
+            validate={cardValidator} 
+            format={formatCreditCardNumber} 
+          >
             {({ input, meta }) => (
               <Stack
                 direction="row"
                 spacing={1}
               >
-                <Input {...input} type="text" placeholder="Card Number" />
+                <Input {...input} type="text" placeholder="Card Number" pattern="[\d| ]{16}" />
                 {meta.error && meta.touched && <span>{meta.error}</span>}
               </Stack>
             )}
@@ -25,38 +29,29 @@ export default function BankCardView() {
             alignItems="center"
             spacing={2}
           >
-            <Stack
-              direction="row"
-              spacing={1}
+            <Field name="Expiration Date" 
+              validate={monthValidator}
+              format={formatExpirationDate}
             >
-              <Field name="Expiration Month" validate={required}>
-                {({ input, meta }) => (
-                  <Stack
-                    spacing={1}
-                  >
-                    <Input {...input} className={styles.expire} type="text" placeholder="00" />
-                    {meta.error && meta.touched && <span>{meta.error}</span>}
-                  </Stack>
-                )}
-              </Field>
-              <Typography>/</Typography>
-              <Field name="Expiration Year" validate={required}>
-                {({ input, meta }) => (
-                  <Stack
-                    spacing={1}
-                  >
-                    <Input {...input} className={styles.expire} type="text" placeholder="00" />
-                    {meta.error && meta.touched && <span>{meta.error}</span>}
-                  </Stack>
-                )}
-              </Field>
-            </Stack>
-            <Field name="CVV" validate={required}>
               {({ input, meta }) => (
                 <Stack
                   spacing={1}
                 >
-                  <Input {...input} className={styles.cvv} type="text" placeholder="CVV" />
+                  <Input {...input} className={styles.expire} type="text" pattern="\d\d/\d\d" placeholder="00/0000" />
+                  {meta.error && meta.touched && <span>{meta.error}</span>}
+                </Stack>
+              )}
+            </Field>
+            <Field 
+              name="CVC" 
+              validate={cvcValidator}
+              format={formatCVC}
+            >
+              {({ input, meta }) => (
+                <Stack
+                  spacing={1}
+                >
+                  <Input {...input} className={styles.cvv} type="text" pattern="\d{3}" placeholder="000" />
                   {meta.error && meta.touched && <span>{meta.error}</span>}
                 </Stack>
               )}
