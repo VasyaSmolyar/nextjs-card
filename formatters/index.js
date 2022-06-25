@@ -29,3 +29,9 @@ export function formatExpirationDate(value) {
   
   return clearValue;
 }
+
+export function formatAmount(value) {
+  const clearValue = clearNumber(value);
+  
+  return clearValue.trim();
+}

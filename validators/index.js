@@ -13,9 +13,8 @@ export const monthValidator = value => {
 
 export const yearValidator = value => {
   const [ _, year ] = value.split('/');
-  const clearYear = year.slice(0, 4);
 
-  return clearYear === undefined || clearYear.length != 4 ? `Wrong format.` : undefined;
+  return year === undefined || year.slice(0, 4).length != 4 ? `Wrong format.` : undefined;
 }
 
 export const cvcValidator = value => value.slice(0, 3).length != 3 ? `Wrong format.` : undefined;
