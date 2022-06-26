@@ -1,7 +1,11 @@
 .expire {
-  width: 70px;
+  width: 100px;
 }
 
 .cvv {
-  width: 40px;
+  width: 70px;
+}
+
+.stack {
+  align-items: flex-start;
 }

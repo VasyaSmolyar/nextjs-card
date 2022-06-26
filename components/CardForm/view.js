@@ -1,47 +1,65 @@
 import BankCard from "components/BankCard";
-import { Stack, Button, Input } from '@mui/material';
+import { Stack, Button, TextField, Card, CardContent } from '@mui/material';
 import { Form, Field } from 'react-final-form';
 import { formatAmount } from 'formatters';
 import { required } from 'validators';
+import styles from './CardForm.module.css'
 
-export default function CardFormView({ card, onSubmit }) {
+export default function CardFormView({ card, onSubmit, status, onClick }) {
   return (
-    <>
+    <div className={status} onClick={onClick}>
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, invalid }) => (
-          <form onSubmit={handleSubmit}>
-            <BankCard />
+          <form onSubmit={handleSubmit} onClick={onClick} style={{ width: 'fit-content' }}>
             <Stack
-              direction="row"
-              spacing={2}
+              spacing={4}
             >
-              <Field 
-                name="Amount" 
-                validate={required} 
-                format={formatAmount} 
-              >
-                {({ input, meta }) => (
+              <BankCard />
+
+              <Card>
+                <CardContent>
                   <Stack
-                    spacing={1}
+                    direction="row"
+                    spacing={2}
+                    className={styles.stack}
                   >
-                    <Input {...input} type="text" placeholder="Amount" />
-                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                    <Field 
+                      name="Amount" 
+                      validate={required} 
+                      format={formatAmount} 
+                    >
+                      {({ input, meta }) => (
+                        <Stack
+                          spacing={1}
+                        >
+                          <TextField sx={{ boxShadow: 3 }} size="small" {...input} type="text" placeholder="Amount" />
+                          {meta.error && meta.touched && <span>{meta.error}</span>}
+                        </Stack>
+                      )}
+                    </Field>
+                    <Button 
+                      variant="contained" 
+                      disabled={invalid}
+                      type="submit"
+                    >
+                      Continue
+                    </Button>
                   </Stack>
-                )}
-              </Field>
-              <Button 
-                variant="contained" 
-                disabled={invalid}
-                type="submit"
-              >
-                Continue
-              </Button>
+                </CardContent>
+              </Card>
+
+              {JSON.stringify(card, 0, 2) != "{}" && 
+                <Card>
+                  <CardContent>
+                    {JSON.stringify(card, 0, 2)}
+                  </CardContent>
+                </Card>
+              }
             </Stack>
           </form>
         )}
       />
-    {!!card && <div>{JSON.stringify(card, 0, 2)}</div>}
-    </>
+    </div>
   )
 }
