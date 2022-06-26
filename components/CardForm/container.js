@@ -1,12 +1,12 @@
 import CardFormView from "./view";
+import useCardApi from "hooks/services/useCardApi";
 
 export function CardFormContainer() {
-  const onSubmit = async values => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
-  }
+  const { card, postCard } = useCardApi();
+
+  const onSubmit = values => postCard(values);
 
   return (
-    <CardFormView onSubmit={onSubmit} />
+    <CardFormView card={card} onSubmit={onSubmit} />
   )
 }

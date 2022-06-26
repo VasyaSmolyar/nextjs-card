@@ -9,7 +9,7 @@ export default function BankCardView({ cardValidator, monthValidator, cvcValidat
       <CardContent>
         <Stack spacing={2}>
           <Field 
-            name="Card Number" 
+            name="cardNumber" 
             validate={cardValidator} 
             format={formatCreditCardNumber} 
           >
@@ -29,7 +29,7 @@ export default function BankCardView({ cardValidator, monthValidator, cvcValidat
             alignItems="center"
             spacing={2}
           >
-            <Field name="Expiration Date" 
+            <Field name="expirationDate" 
               validate={monthValidator}
               format={formatExpirationDate}
             >
